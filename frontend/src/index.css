@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* * {
+* {
   box-sizing: border-box;
 }
 
@@ -11,4 +11,4 @@ body,
   padding: 0;
   width: 100%;
   overflow-x: hidden;
-} */
+}
