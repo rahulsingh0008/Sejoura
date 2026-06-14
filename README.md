@@ -114,7 +114,7 @@ Gemini was selected because of its strong natural language processing capabiliti
 
 ### Frontend
 
-* Next.js
+* React
 * Tailwind CSS
 
 ### Backend
