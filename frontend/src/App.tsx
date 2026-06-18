@@ -5,19 +5,45 @@ import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import ComponentsDemo from "./pages/ComponentsDemo";
+import { useState } from "react";
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
   return (
-    <Routes>
-      <Route
-        path="/components-demo"
-        element={<ComponentsDemo />}
-      />
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/login" element={<Login />} />
-    </Routes>
+    <div
+      className={
+        darkMode
+          ? "bg-gray-900 text-white min-h-screen"
+          : "bg-white text-black min-h-screen"
+      }
+    >
+      <Routes>
+        <Route path="/" element={<Home
+          darkMode={darkMode}
+          toggleDarkMode={() => setDarkMode(!darkMode)}
+        />} />
+        <Route path="/about" element={<About
+          darkMode={darkMode}
+          toggleDarkMode={() => setDarkMode(!darkMode)}
+        />} />
+        <Route path="/dashboard" element={<Dashboard
+          darkMode={darkMode}
+          toggleDarkMode={() => setDarkMode(!darkMode)}
+        />} />
+        <Route path="/login" element={<Login
+          darkMode={darkMode}
+          toggleDarkMode={() => setDarkMode(!darkMode)}
+        />} />
+        <Route
+          path="/components-demo"
+          element={<ComponentsDemo
+          darkMode={darkMode}
+          toggleDarkMode={() => setDarkMode(!darkMode)}
+        />}
+        />
+      </Routes>
+    </div>
   );
 }
 

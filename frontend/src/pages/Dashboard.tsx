@@ -1,12 +1,23 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-function Dashboard() {
+type DashboardProps = {
+  darkMode: boolean;
+  toggleDarkMode: () => void;
+};
+
+function Dashboard({ darkMode,
+  toggleDarkMode }: DashboardProps) {
   return (
     <>
-      <Navbar />
+      <Navbar darkMode={darkMode}
+  toggleDarkMode={toggleDarkMode} />
 
-      <main className="max-w-5xl mx-auto p-8">
+      <main className={`max-w-5xl mx-auto p-8 ${
+        darkMode
+          ? "bg-gray-900 text-white"
+          : "bg-white text-black"
+      }`}>
         <h1 className="text-4xl font-bold mb-4">Dashboard</h1>
 
         <p>
@@ -14,7 +25,7 @@ function Dashboard() {
         </p>
       </main>
 
-      <Footer />
+      <Footer darkMode={darkMode} />
     </>
   );
 }
