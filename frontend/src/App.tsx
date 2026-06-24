@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
+import Queries from "./pages/Queries";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
@@ -41,6 +42,15 @@ function App() {
           darkMode={darkMode}
           toggleDarkMode={() => setDarkMode(!darkMode)}
         />}
+        />
+        <Route
+          path="/queries"
+          element={
+            <Queries
+              darkMode={darkMode}
+              toggleDarkMode={() => setDarkMode(!darkMode)}
+            />
+          }
         />
       </Routes>
     </div>

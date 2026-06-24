@@ -21,6 +21,7 @@ function Navbar({ darkMode, toggleDarkMode }: NavbarProps) {
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
         <Link to="/dashboard">Dashboard</Link>
+        <Link to="/queries">Queries</Link>
         <Link to="/login">Login</Link>
 
         <button
