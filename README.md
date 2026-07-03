@@ -1,121 +1,32 @@
 # Sejoura – AI-Powered Guest Support Assistant
-An AI-powered guest support assistant that automates routine customer queries for homestays and eco-tourism businesses.
 
-## Overview
+## Project Overview
 
-Sejoura is an AI-powered guest support assistant built for homestay owners and eco-tourism operators who regularly handle customer inquiries across channels such as phone calls, WhatsApp, social media, and email.
-
-Small hospitality businesses often spend a significant amount of time answering repetitive questions about accommodation details, pricing, amenities, check-in procedures, local attractions, and house rules. Sejoura aims to reduce this workload by providing an intelligent assistant that can respond to common guest queries instantly and accurately using information provided by the business.
-
-By automating routine customer support tasks, Sejoura helps property owners save time, improve response consistency, and enhance the overall guest experience.
+Sejoura is an AI-powered web application developed for homestay owners and eco-tourism businesses. It helps automate guest support by managing guest queries and providing a centralized system for handling customer interactions. The application reduces repetitive customer inquiries and improves response efficiency.
 
 ---
 
-## Problem Statement
+## Features
 
-Homestay owners and eco-tourism operators often manage guest communications with limited staff and resources. As the number of inquiries grows, responding to every question manually becomes time-consuming and may lead to delayed responses or inconsistent information.
-
-Many guest questions are repetitive in nature, covering topics such as:
-
-* Property facilities and amenities
-* Pricing and availability
-* Check-in and check-out procedures
-* House rules and policies
-* Local attractions and recommendations
-
-Sejoura addresses this challenge by using artificial intelligence to provide fast, reliable, and context-aware responses based on a business-specific knowledge base.
+* Manage guest queries
+* Create, view, update, and delete guest queries (CRUD)
+* Search guest queries by status
+* Responsive React frontend
+* RESTful API built with Express.js
+* PostgreSQL database hosted on Supabase
+* Prisma ORM for database operations
+* Dark/Light mode support
 
 ---
 
-## Target Users
-
-Sejoura is designed for:
-
-* Homestay owners
-* Eco-tourism operators
-* Small hospitality businesses
-* Property managers
-
-These users require a cost-effective solution that improves customer support efficiency without increasing operational overhead.
-
----
-
-## Core Features
-
-### 1. Homestay Information Management
-
-Allows property owners to manage and update important information about their accommodation, including:
-
-* Facilities and amenities
-* Pricing details
-* Available services
-* Check-in and check-out information
-* House rules and policies
-
-### 2. Knowledge Base Management
-
-Provides a centralized location for storing information that guests commonly request, including:
-
-* Frequently Asked Questions (FAQs)
-* Guest guidelines
-* Local attraction details
-* Travel and transportation information
-* Property-specific recommendations
-
-### 3. AI-Powered Guest Assistant
-
-Uses artificial intelligence to answer guest questions instantly by leveraging information stored within the platform.
-
-The assistant is designed to:
-
-* Understand natural language questions
-* Provide accurate responses
-* Reduce repetitive support tasks
-* Deliver consistent information to guests
-
-### 4. Conversation History Dashboard
-
-Maintains a record of previous guest interactions, allowing property owners to:
-
-* Review past conversations
-* Monitor inquiry trends
-* Analyze guest needs
-* Improve support quality over time
-
-### 5. Unanswered Query Tracker
-
-Tracks questions that the AI assistant is unable to answer.
-
-This helps owners:
-
-* Identify gaps in available information
-* Expand their knowledge base
-* Continuously improve AI response quality
-
----
-
-## AI Integration
-
-Sejoura integrates the Gemini API to power its intelligent guest support capabilities.
-
-The AI assistant will:
-
-* Understand guest inquiries written in natural language
-* Retrieve relevant information from the platform's knowledge base
-* Generate context-aware responses
-* Reduce manual customer support workload
-* Improve response speed and consistency
-
-Gemini was selected because of its strong natural language processing capabilities, ease of integration, and developer-friendly free tier, making it well suited for a student-led project.
-
----
-
-## Technology Stack
+## Tech Stack
 
 ### Frontend
 
 * React
+* TypeScript
 * Tailwind CSS
+* React Router
 
 ### Backend
 
@@ -124,78 +35,110 @@ Gemini was selected because of its strong natural language processing capabiliti
 
 ### Database
 
-* Supabase (PostgreSQL)
+* PostgreSQL (Supabase)
 
-### Authentication
+### ORM
 
-* Supabase Auth
-
-### AI Services
-
-* Gemini API
-
-### Deployment
-
-* Vercel (Frontend)
-* Render (Backend)
+* Prisma
 
 ---
 
-## Project Goals
+## Database Choice
 
-The primary goals of Sejoura are:
-
-* Automate routine guest support interactions
-* Reduce response times for common inquiries
-* Improve the consistency and accuracy of customer communication
-* Minimize repetitive support workload for property owners
-* Provide a scalable AI-powered solution for small hospitality businesses
+PostgreSQL was selected because Sejoura manages structured guest information with clearly defined fields. PostgreSQL provides reliable relational storage, while Prisma simplifies database access with an easy-to-use ORM.
 
 ---
 
-## Planned Development Scope
+## Database Schema
 
-The initial version of Sejoura will focus on:
+The application currently contains one primary entity:
 
-* Property information management
-* Knowledge base creation and maintenance
-* AI-powered guest query handling
-* Conversation tracking
-* Unanswered query monitoring
+**GuestQuery**
 
-Additional enhancements may be explored in future iterations based on project progress and user feedback.
+| Field     | Type     |
+| --------- | -------- |
+| id        | Integer  |
+| guestName | String   |
+| query     | String   |
+| status    | String   |
+| createdAt | DateTime |
+
+*(Insert the schema diagram image here after creating it.)*
 
 ---
 
-## Repository Structure
+## REST API Endpoints
 
-```text
-sejoura-ai/
-│
-├── frontend/
-│   └── .gitkeep
-│
-├── backend/
-│   └── .gitkeep
-│
-├── README.md
-├── .gitignore
-└── .env.example
+| Method | Endpoint                            | Description                |
+| ------ | ----------------------------------- | -------------------------- |
+| GET    | /api/queries                        | Get all guest queries      |
+| GET    | /api/queries/:id                    | Get a specific guest query |
+| POST   | /api/queries                        | Create a guest query       |
+| PUT    | /api/queries/:id                    | Update a guest query       |
+| DELETE | /api/queries/:id                    | Delete a guest query       |
+| GET    | /api/queries/search?status=answered | Search guest queries       |
+
+---
+
+## Environment Variables
+
+Create a `.env` file inside the backend directory.
+
+```env
+DATABASE_URL=your_pooler_connection
+DIRECT_URL=your_direct_connection
+PORT=5000
 ```
 
 ---
 
-## Current Status
+## Database Setup
 
-Project Phase: Planning and Initial Repository Setup
+1. Clone the repository.
 
-This repository currently contains the foundational project structure and documentation. Application development, feature implementation, and deployment configuration will be completed during the project development phase.
+2. Navigate to the backend directory.
+
+3. Install dependencies.
+
+```bash
+npm install
+```
+
+4. Generate the Prisma Client.
+
+```bash
+npx prisma generate
+```
+
+5. Run database migrations.
+
+```bash
+npx prisma migrate dev
+```
+
+6. Start the backend server.
+
+```bash
+npm run dev
+```
 
 ---
 
-## Setup — Coming Soon
+## Running the Frontend
 
-Detailed setup, installation, configuration, and deployment instructions will be added as development progresses.
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 ---
 
+## Future Improvements
+
+* AI-powered guest chatbot using Gemini API
+* Authentication for homestay owners
+* Knowledge Base Management
+* Conversation Analytics Dashboard
+* FAQ Management
+* Multi-homestay support
