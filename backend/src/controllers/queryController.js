@@ -1,83 +1,133 @@
-let queries = require("../data/queries");
+const { PrismaClient } = require("@prisma/client");
 
-const getAllQueries = (req, res) => {
-  res.status(200).json(queries);
-};
+const prisma = new PrismaClient();
 
-const getQueryById = (req, res) => {
-  const id = parseInt(req.params.id);
-
-  const query = queries.find((q) => q.id === id);
-
-  if (!query) {
-    return res.status(404).json({
-      message: "Query not found",
+// GET ALL
+const getAllQueries = async (req, res) => {
+  try {
+    const queries = await prisma.guestQuery.findMany({
+      orderBy: {
+        id: "asc",
+      },
     });
+
+    res.status(200).json(queries);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-
-  res.status(200).json(query);
 };
 
-const createQuery = (req, res) => {
-  const { guestName, query, status } = req.body;
+// GET ONE
+const getQueryById = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
 
-  const newQuery = {
-    id: queries.length + 1,
-    guestName,
-    query,
-    status,
-  };
-
-  queries.push(newQuery);
-
-  res.status(201).json(newQuery);
-};
-
-const updateQuery = (req, res) => {
-  const id = parseInt(req.params.id);
-
-  const index = queries.findIndex((q) => q.id === id);
-
-  if (index === -1) {
-    return res.status(404).json({
-      message: "Query not found",
+    const query = await prisma.guestQuery.findUnique({
+      where: { id },
     });
+
+    if (!query) {
+      return res.status(404).json({
+        message: "Query not found",
+      });
+    }
+
+    res.status(200).json(query);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-
-  queries[index] = {
-    ...queries[index],
-    ...req.body,
-  };
-
-  res.status(200).json(queries[index]);
 };
 
-const deleteQuery = (req, res) => {
-  const id = parseInt(req.params.id);
+// CREATE
+const createQuery = async (req, res) => {
+  try {
+    const { guestName, query, status } = req.body;
 
-  const query = queries.find((q) => q.id === id);
-
-  if (!query) {
-    return res.status(404).json({
-      message: "Query not found",
+    const newQuery = await prisma.guestQuery.create({
+      data: {
+        guestName,
+        query,
+        status,
+      },
     });
+
+    res.status(201).json(newQuery);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-
-  queries = queries.filter((q) => q.id !== id);
-
-  res.status(200).json({
-    message: "Query deleted successfully",
-  });
 };
 
-const searchQueries = (req, res) => {
-  const status = req.query.status;
+// UPDATE
+const updateQuery = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
 
-  const filtered = queries.filter(
-    (q) => q.status.toLowerCase() === status.toLowerCase()
-  );
+    const existing = await prisma.guestQuery.findUnique({
+      where: { id },
+    });
 
-  res.status(200).json(filtered);
+    if (!existing) {
+      return res.status(404).json({
+        message: "Query not found",
+      });
+    }
+
+    const updated = await prisma.guestQuery.update({
+      where: { id },
+      data: req.body,
+    });
+
+    res.status(200).json(updated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// DELETE
+const deleteQuery = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+
+    const existing = await prisma.guestQuery.findUnique({
+      where: { id },
+    });
+
+    if (!existing) {
+      return res.status(404).json({
+        message: "Query not found",
+      });
+    }
+
+    await prisma.guestQuery.delete({
+      where: { id },
+    });
+
+    res.status(200).json({
+      message: "Query deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// SEARCH
+const searchQueries = async (req, res) => {
+  try {
+    const status = req.query.status;
+
+    const queries = await prisma.guestQuery.findMany({
+      where: {
+        status: {
+          equals: status,
+          mode: "insensitive",
+        },
+      },
+    });
+
+    res.status(200).json(queries);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 module.exports = {
