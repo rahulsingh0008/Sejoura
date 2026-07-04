@@ -55,15 +55,7 @@ The application currently contains one primary entity:
 
 **GuestQuery**
 
-| Field     | Type     |
-| --------- | -------- |
-| id        | Integer  |
-| guestName | String   |
-| query     | String   |
-| status    | String   |
-| createdAt | DateTime |
-
-*(Insert the schema diagram image here after creating it.)*
+![Database Schema](assets/schema-diagram.png)
 
 ---
 
