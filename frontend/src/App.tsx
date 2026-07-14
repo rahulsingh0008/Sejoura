@@ -7,6 +7,9 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import ComponentsDemo from "./pages/ComponentsDemo";
 import { useState } from "react";
+import Register from "./pages/Register";
+import ProtectedRoute from "./components/ProtectedRoute";
+import LoginSuccess from "./pages/LoginSuccess";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -28,10 +31,17 @@ function App() {
           darkMode={darkMode}
           toggleDarkMode={() => setDarkMode(!darkMode)}
         />} />
-        <Route path="/dashboard" element={<Dashboard
-          darkMode={darkMode}
-          toggleDarkMode={() => setDarkMode(!darkMode)}
-        />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard
+                darkMode={darkMode}
+                toggleDarkMode={() => setDarkMode(!darkMode)}
+              />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/login" element={<Login
           darkMode={darkMode}
           toggleDarkMode={() => setDarkMode(!darkMode)}
@@ -46,11 +56,26 @@ function App() {
         <Route
           path="/queries"
           element={
-            <Queries
+            <ProtectedRoute>
+              <Queries
+                darkMode={darkMode}
+                toggleDarkMode={() => setDarkMode(!darkMode)}
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <Register
               darkMode={darkMode}
               toggleDarkMode={() => setDarkMode(!darkMode)}
             />
           }
+        />
+        <Route
+          path="/login-success"
+          element={<LoginSuccess />}
         />
       </Routes>
     </div>

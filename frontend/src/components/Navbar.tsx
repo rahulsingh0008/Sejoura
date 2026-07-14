@@ -6,6 +6,11 @@ type NavbarProps = {
 };
 
 function Navbar({ darkMode, toggleDarkMode }: NavbarProps) {
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  };
+
   return (
     <nav
       className={
@@ -22,8 +27,17 @@ function Navbar({ darkMode, toggleDarkMode }: NavbarProps) {
         <Link to="/about">About</Link>
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/queries">Queries</Link>
-        <Link to="/login">Login</Link>
-
+        {localStorage.getItem("token") ? (
+          <button
+            onClick={logout}
+            className="text-white"
+          >
+            Logout
+          </button>
+        ) : (
+          <Link to="/login">Login</Link>
+        )}
+        <Link to="/register">Register</Link>
         <button
           onClick={toggleDarkMode}
           className="px-3 py-1 bg-white text-blue-600 rounded-lg font-medium"

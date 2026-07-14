@@ -23,8 +23,20 @@ function Queries({ darkMode, toggleDarkMode }: QueriesProps) {
   const [status, setStatus] = useState("pending");
 
   const fetchQueries = () => {
-    fetch("http://localhost:5000/api/queries")
-      .then((res) => res.json())
+    const token = localStorage.getItem("token");
+
+    fetch("http://localhost:5000/api/queries", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error("Unauthorized");
+        }
+
+        return res.json();
+      })
       .then((data) => {
         setQueries(data);
         setLoading(false);
@@ -44,6 +56,7 @@ function Queries({ darkMode, toggleDarkMode }: QueriesProps) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify({
         guestName,
@@ -74,6 +87,7 @@ function Queries({ darkMode, toggleDarkMode }: QueriesProps) {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           status: newStatus,
@@ -89,6 +103,9 @@ function Queries({ darkMode, toggleDarkMode }: QueriesProps) {
       `http://localhost:5000/api/queries/${id}`,
       {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       }
     );
 
@@ -161,7 +178,7 @@ function Queries({ darkMode, toggleDarkMode }: QueriesProps) {
           <p>Loading...</p>
         ) : (
           <div className="space-y-4">
-            {queries.map((q) => (
+            {Array.isArray(queries) && queries.map((q) => (
               <div
                 key={q.id}
                 className={

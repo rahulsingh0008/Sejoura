@@ -4,6 +4,11 @@ const dotenv = require("dotenv");
 
 const queryRoutes = require("./routes/queryRoutes");
 const errorHandler = require("./middleware/errorHandler");
+const authRoutes = require("./routes/authRoutes");
+const passport = require("passport");
+const session = require("express-session");
+
+require("./config/passport");
 
 dotenv.config();
 
@@ -13,6 +18,19 @@ app.use(cors());
 
 app.use(express.json());
 
+app.use(
+  session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+
+app.use(passport.session());
+
+app.use("/api/auth", authRoutes);
 app.use("/api/queries", queryRoutes);
 
 app.use(errorHandler);

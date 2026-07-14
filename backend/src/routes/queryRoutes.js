@@ -1,7 +1,7 @@
 const express = require("express");
 
 const router = express.Router();
-
+const verifyToken = require("../middleware/authMiddleware");
 const {
   getAllQueries,
   getQueryById,
@@ -11,16 +11,16 @@ const {
   searchQueries,
 } = require("../controllers/queryController");
 
-router.get("/", getAllQueries);
+router.get("/", verifyToken, getAllQueries);
 
-router.get("/search", searchQueries);
+router.get("/search", verifyToken, searchQueries);
 
-router.get("/:id", getQueryById);
+router.get("/:id", verifyToken, getQueryById);
 
-router.post("/", createQuery);
+router.post("/", verifyToken, createQuery);
 
-router.put("/:id", updateQuery);
+router.put("/:id", verifyToken, updateQuery);
 
-router.delete("/:id", deleteQuery);
+router.delete("/:id", verifyToken, deleteQuery);
 
 module.exports = router;
