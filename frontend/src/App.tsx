@@ -10,6 +10,7 @@ import { useState } from "react";
 import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LoginSuccess from "./pages/LoginSuccess";
+import AIAssistant from "./pages/AIAssistant";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -76,6 +77,14 @@ function App() {
         <Route
           path="/login-success"
           element={<LoginSuccess />}
+        />
+        <Route
+          path="/ai"
+          element={
+            <ProtectedRoute>
+              <AIAssistant darkMode={darkMode} />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </div>

@@ -7,6 +7,7 @@ const errorHandler = require("./middleware/errorHandler");
 const authRoutes = require("./routes/authRoutes");
 const passport = require("passport");
 const session = require("express-session");
+const aiRoutes = require("./routes/aiRoutes");
 
 require("./config/passport");
 
@@ -34,6 +35,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/queries", queryRoutes);
 
 app.use(errorHandler);
+app.use("/api/ai", aiRoutes);
 
 const PORT = process.env.PORT || 5000;
 

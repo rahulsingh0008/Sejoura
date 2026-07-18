@@ -27,6 +27,7 @@ function Navbar({ darkMode, toggleDarkMode }: NavbarProps) {
         <Link to="/about">About</Link>
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/queries">Queries</Link>
+        <Link to="/ai">AI Assistant</Link>
         {localStorage.getItem("token") ? (
           <button
             onClick={logout}
