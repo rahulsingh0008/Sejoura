@@ -22,6 +22,9 @@ function Queries({ darkMode }: QueriesProps) {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("pending");
 
+const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [selectedId, setSelectedId] = useState<number | null>(null);
+
   const fetchQueries = () => {
     const token = localStorage.getItem("token");
 
@@ -104,18 +107,39 @@ function Queries({ darkMode }: QueriesProps) {
     fetchQueries();
   };
 
-  const deleteQuery = async (id: number) => {
-    await fetch(
-      `http://localhost:5000/api/queries/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+  const deleteQuery = async () => {
+    if (selectedId === null) return;
 
-    fetchQueries();
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/queries/${selectedId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to delete query");
+      }
+
+      showToast({
+        type: "success",
+        message: "Query deleted successfully!",
+      });
+
+      setShowDeleteModal(false);
+      setSelectedId(null);
+
+      fetchQueries();
+    } catch (err: any) {
+      showToast({
+        type: "error",
+        message: err.message || "Something went wrong!",
+      });
+    }
   };
 
   return (
@@ -170,7 +194,10 @@ function Queries({ darkMode }: QueriesProps) {
 
                   <div className="flex gap-2">
                     <button onClick={() => updateStatus(q.id, q.status)} className="px-3 py-2 rounded bg-yellow-500 text-white">Change Status</button>
-                    <button onClick={() => { if (window.confirm("Are you sure you want to delete this query?")) deleteQuery(q.id); }} className="px-3 py-2 rounded bg-red-600 text-white">Delete</button>
+                    <button onClick={() => {
+                      setSelectedId(q.id);
+                      setShowDeleteModal(true);
+                    }} className="px-3 py-2 rounded bg-red-600 text-white">Delete</button>
                   </div>
                 </div>
               </div>
@@ -181,6 +208,43 @@ function Queries({ darkMode }: QueriesProps) {
       </main>
 
       <Footer darkMode={darkMode} />
+            {showDeleteModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div
+            className={`w-96 rounded-xl p-6 shadow-xl ${
+              darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+            }`}
+          >
+            <h2 className="text-2xl font-bold mb-3">
+              Delete Query
+            </h2>
+
+            <p className="mb-6">
+              Are you sure you want to delete this guest query?
+              This action cannot be undone.
+            </p>
+
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  setSelectedId(null);
+                }}
+                className="px-5 py-2 rounded-lg border"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={deleteQuery}
+                className="px-5 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
