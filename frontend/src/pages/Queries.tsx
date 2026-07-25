@@ -18,7 +18,6 @@ type QueriesProps = {
 function Queries({ darkMode }: QueriesProps) {
   const [queries, setQueries] = useState<Query[]>([]);
   const [loading, setLoading] = useState(true);
-
   const [guestName, setGuestName] = useState("");
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("pending");
