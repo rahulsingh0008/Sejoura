@@ -1,16 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { showToast } from "../components/ui/Toast";
 
 type RegisterProps = {
   darkMode: boolean;
-  toggleDarkMode: () => void;
 };
 
 function Register({
   darkMode,
-  toggleDarkMode,
 }: RegisterProps) {
   const navigate = useNavigate();
 
@@ -35,51 +33,34 @@ function Register({
     const data = await response.json();
 
     if (response.ok) {
-      alert("Registration Successful!");
+      showToast({ message: "Registration Successful!", variant: "success" });
       navigate("/login");
     } else {
       if (data.errors && data.errors.length > 0) {
-        alert(data.errors[0].msg);
+        showToast({ message: data.errors[0].msg, variant: "error" });
       } else {
-        alert(data.message);
+        showToast({ message: data.message, variant: "error" });
       }
     }
   };
 
   return (
     <>
-      <Navbar
-        darkMode={darkMode}
-        toggleDarkMode={toggleDarkMode}
-      />
 
-      <main className="max-w-md mx-auto mt-12 p-6 border rounded-xl shadow-lg">
-        <h1 className="text-3xl font-bold mb-6">
-          Register
-        </h1>
+      <main className="min-h-screen flex items-center justify-center p-6">
+        <div className="glass max-w-md w-full p-8 rounded-2xl shadow-lg fade-in">
+          <h1 className="text-2xl font-extrabold mb-4">Create your account</h1>
+          <p className="text-sm text-gray-400 mb-6">Start using Sejoura to manage guest queries and AI features</p>
 
-        <input
-          type="email"
-          placeholder="Email"
-          className="border w-full p-3 rounded mb-4 text-black"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <input type="email" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)} className="form-input w-full mb-4" />
+          <input type="password" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)} className="form-input w-full mb-6" />
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="border w-full p-3 rounded mb-6 text-black"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <button onClick={register} className="w-full py-3 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-500 text-white mb-3">Register</button>
 
-        <button
-          onClick={register}
-          className="w-full bg-blue-600 text-white py-3 rounded-lg"
-        >
-          Register
-        </button>
+          <div className="mt-4 text-center text-sm">
+            <a href="/login" className="text-indigo-500 hover:underline">Already have an account? Sign in</a>
+          </div>
+        </div>
       </main>
 
       <Footer darkMode={darkMode} />

@@ -4,7 +4,7 @@ type HeroProps = {
 
 function Hero({ darkMode }: HeroProps) {
   return (
-    <section className="text-center py-12 px-4">
+    <section className="text-center pt-24 pb-12 px-4">
       <div className="max-w-3xl mx-auto">
         <h2 className="text-4xl font-bold mb-4">
           AI-Powered Guest Support Assistant

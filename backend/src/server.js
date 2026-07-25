@@ -1,6 +1,9 @@
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
 
 const queryRoutes = require("./routes/queryRoutes");
 const errorHandler = require("./middleware/errorHandler");
@@ -11,7 +14,7 @@ const aiRoutes = require("./routes/aiRoutes");
 
 require("./config/passport");
 
-dotenv.config();
+
 
 const app = express();
 

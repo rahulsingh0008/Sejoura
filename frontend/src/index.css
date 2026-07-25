@@ -1,14 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 @import "tailwindcss";
 
-* {
+:root{
+  --bg: #0f172a;
+  --glass-bg: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.08);
+  --glass-blur: 10px;
+  --accent: #6d28d9; /* purple-600 */
+  /* header height used to offset fixed navbar; adjust if navbar padding/height changes */
+  --header-height: 72px;
+}
+/* Apply the header offset to the app wrapper so pages aren't hidden under the fixed navbar */
+.app-with-header { padding-top: var(--header-height); }
+
+*{
   box-sizing: border-box;
 }
 
-html,
-body,
-#root {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  overflow-x: hidden;
+html, body, #root{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+  color: #0b1220;
 }
+
+/* Glassmorphism utility */
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+/* Subtle card lift on hover */
+.card {
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms;
+}
+.card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(13,18,30,0.35);
+}
+
+/* Focus states */
+.input-focus:focus{
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(99,102,241,0.12);
+  border-color: rgba(99,102,241,0.9);
+}
+
+/* subtle fade-in */
+.fade-in{
+  animation: fadeIn 360ms ease both;
+}
+@keyframes fadeIn{
+  from{opacity:0; transform: translateY(6px);} to{opacity:1; transform:none;}
+}
+
+/* Responsive containers */
+.container-max { max-width: 1100px; margin-left:auto; margin-right:auto; padding-left:1rem; padding-right:1rem; }
+
+/* Utility for subtle divider */
+.subtle-divider{ height:1px; background: rgba(15,23,42,0.06); margin: 1rem 0; }
+
+/* Small tweaks for forms */
+.form-input {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  background: rgba(255, 255, 255, 0.92);
+  color: #0f172a;
+}
+
+.form-input::placeholder {
+  color: rgba(15, 23, 42, 0.5);
+}
+
+/* Dark adjustments (kept minimal so app theme logic still works) */
+body.dark {
+  background: linear-gradient(180deg, #071027, #041021);
+  color: #e6eef8;
+}
+
+body.dark .glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.05));
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body.dark .form-input {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #e2e8f0;
+}
+
+body.dark .form-input::placeholder {
+  color: rgba(226, 232, 240, 0.65);
+}
+
+body.dark .subtle-divider {
+  background: rgba(226, 232, 240, 0.12);
+}
+
+body.dark .text-gray-400 {
+  color: #cbd5e1;
+}
+
+body.dark .text-gray-500 {
+  color: #94a3b8;
+}
+
+body.dark .text-gray-600 {
+  color: #cbd5e1;
+}
+
+/* Keep tailwind utilities available */

@@ -1,15 +1,12 @@
-import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Card from "../components/Card";
 import Footer from "../components/Footer";
 
 type HomeProps = {
   darkMode: boolean;
-  toggleDarkMode: () => void;
 };
 
-function Home({ darkMode,
-  toggleDarkMode }: HomeProps) {
+function Home({ darkMode }: HomeProps) {
   const features = [
     {
       title: "AI Guest Assistant",
@@ -27,8 +24,6 @@ function Home({ darkMode,
 
   return (
     <>
-      <Navbar darkMode={darkMode}
-  toggleDarkMode={toggleDarkMode} />
       <Hero darkMode={darkMode} />
 
       <div className={`max-w-4xl mx-auto p-8 space-y-8 ${

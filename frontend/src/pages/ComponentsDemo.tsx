@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import {
   Button,
@@ -11,18 +10,14 @@ import {
 
 type ComponentsDemoProps = {
   darkMode: boolean;
-  toggleDarkMode: () => void;
 };
 
-function ComponentsDemo({ darkMode,
-  toggleDarkMode }: ComponentsDemoProps) {
+function ComponentsDemo({ darkMode }: ComponentsDemoProps) {
   const [showModal, setShowModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
   return (
     <>
-      <Navbar darkMode={darkMode}
-  toggleDarkMode={toggleDarkMode} />
 
       <div className={`max-w-4xl mx-auto p-8 space-y-8 ${
         darkMode

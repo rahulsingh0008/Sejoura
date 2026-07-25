@@ -1,18 +1,12 @@
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 type AboutProps = {
   darkMode: boolean;
-  toggleDarkMode: () => void;
 };
 
-function About({ darkMode,
-  toggleDarkMode }: AboutProps) {
+function About({ darkMode }: AboutProps) {
   return (
     <>
-      <Navbar darkMode={darkMode}
-  toggleDarkMode={toggleDarkMode} />
-
       <main className={`max-w-5xl mx-auto p-8 ${
         darkMode
           ? "bg-gray-900 text-white"

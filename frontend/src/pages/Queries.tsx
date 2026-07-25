@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import { PlusCircle } from "../components/Icons";
 import Footer from "../components/Footer";
+import Loader from "../components/ui/Loader";
+import { showToast } from "../components/ui/Toast";
 
 type Query = {
   id: number;
@@ -11,10 +13,9 @@ type Query = {
 
 type QueriesProps = {
   darkMode: boolean;
-  toggleDarkMode: () => void;
 };
 
-function Queries({ darkMode, toggleDarkMode }: QueriesProps) {
+function Queries({ darkMode }: QueriesProps) {
   const [queries, setQueries] = useState<Query[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -52,6 +53,12 @@ function Queries({ darkMode, toggleDarkMode }: QueriesProps) {
   }, []);
 
   const addQuery = async () => {
+    // Input Validation
+    if (!guestName.trim() || !query.trim()) {
+      showToast({ message: "Please fill all fields.", variant: "error" });
+      return;
+    }
+    
     await fetch("http://localhost:5000/api/queries", {
       method: "POST",
       headers: {
@@ -114,110 +121,64 @@ function Queries({ darkMode, toggleDarkMode }: QueriesProps) {
 
   return (
     <>
-      <Navbar
-        darkMode={darkMode}
-        toggleDarkMode={toggleDarkMode}
-      />
 
-      <main className="max-w-6xl mx-auto p-8">
-        <h1 className="text-4xl font-bold mb-6">
-          Guest Queries
-        </h1>
-
-        <div
-          className={
-            darkMode
-              ? "bg-gray-800 p-6 rounded-lg mb-8"
-              : "bg-gray-100 p-6 rounded-lg mb-8"
-          }
-        >
-          <h2 className="text-2xl font-bold mb-4">
-            Add Guest Query
-          </h2>
-
-          <input
-            type="text"
-            placeholder="Guest Name"
-            value={guestName}
-            onChange={(e) =>
-              setGuestName(e.target.value)
-            }
-            className="border p-2 rounded w-full mb-3 text-black"
-          />
-
-          <input
-            type="text"
-            placeholder="Guest Query"
-            value={query}
-            onChange={(e) =>
-              setQuery(e.target.value)
-            }
-            className="border p-2 rounded w-full mb-3 text-black"
-          />
-
-          <select
-            value={status}
-            onChange={(e) =>
-              setStatus(e.target.value)
-            }
-            className="border p-2 rounded w-full mb-3 text-black"
-          >
-            <option value="pending">Pending</option>
-            <option value="answered">Answered</option>
-          </select>
-
-          <button
-            onClick={addQuery}
-            className="bg-blue-600 text-white px-5 py-2 rounded"
-          >
-            Add Query
-          </button>
+      <main className="container-max p-8">
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-3xl font-extrabold">Guest Queries</h1>
+          <div className="text-sm text-gray-400">Manage guest messages and responses</div>
         </div>
 
+        <section className="glass rounded-xl p-6 mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-semibold">Add Guest Query</h2>
+            <div className="text-sm text-gray-400">Tip: keep queries short and actionable</div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+            <input type="text" placeholder="Guest Name" value={guestName} onChange={(e) => setGuestName(e.target.value)} className="form-input w-full" />
+            <select value={status} onChange={(e) => setStatus(e.target.value)} className="form-input w-full">
+              <option value="pending">Pending</option>
+              <option value="answered">Answered</option>
+            </select>
+            <button onClick={addQuery} className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-500 text-white px-4 py-2 rounded-lg">
+              <PlusCircle size={16} /> Add Query
+            </button>
+          </div>
+
+          <textarea placeholder="Guest Query" value={query} onChange={(e) => setQuery(e.target.value)} className="form-input w-full h-28 mt-2" />
+        </section>
+
         {loading ? (
-          <p>Loading...</p>
+          <div className="flex justify-center py-10"><Loader /></div>
+        ) : queries.length === 0 ? (
+          <div className="rounded-xl p-10 text-center glass">
+            <h2 className="text-2xl font-bold">No Guest Queries</h2>
+            <p className="mt-2 text-sm text-gray-400">Add your first guest query above.</p>
+          </div>
         ) : (
           <div className="space-y-4">
-            {Array.isArray(queries) && queries.map((q) => (
-              <div
-                key={q.id}
-                className={
-                  darkMode
-                    ? "bg-gray-800 p-4 rounded-lg"
-                    : "bg-gray-100 p-4 rounded-lg"
-                }
-              >
-                <h2 className="font-bold">
-                  {q.guestName}
-                </h2>
+            {queries.map((q) => (
+              <div key={q.id} className="glass p-4 rounded-lg flex flex-col sm:flex-row sm:justify-between gap-3">
+                <div>
+                  <div className="text-sm text-gray-400">{q.guestName}</div>
+                  <p className="font-medium mt-1">{q.query}</p>
+                </div>
 
-                <p>{q.query}</p>
+                <div className="flex flex-col sm:items-end gap-3">
+                  <span className={`inline-block px-3 py-1 rounded-full text-sm ${q.status === "answered" ? "bg-green-200 text-green-800" : "bg-yellow-200 text-yellow-800"}`}>
+                    {q.status}
+                  </span>
 
-                <p className="mt-2 mb-4">
-                  Status: {q.status}
-                </p>
-
-                <div className="flex gap-3">
-                  <button
-                    onClick={() =>
-                      updateStatus(q.id, q.status)
-                    }
-                    className="bg-yellow-500 text-white px-4 py-2 rounded"
-                  >
-                    Change Status
-                  </button>
-
-                  <button
-                    onClick={() => deleteQuery(q.id)}
-                    className="bg-red-600 text-white px-4 py-2 rounded"
-                  >
-                    Delete
-                  </button>
+                  <div className="flex gap-2">
+                    <button onClick={() => updateStatus(q.id, q.status)} className="px-3 py-2 rounded bg-yellow-500 text-white">Change Status</button>
+                    <button onClick={() => { if (window.confirm("Are you sure you want to delete this query?")) deleteQuery(q.id); }} className="px-3 py-2 rounded bg-red-600 text-white">Delete</button>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         )}
+
       </main>
 
       <Footer darkMode={darkMode} />
