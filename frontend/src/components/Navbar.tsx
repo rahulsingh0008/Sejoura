@@ -8,6 +8,7 @@ type NavbarProps = {
 };
 
 function Navbar({ darkMode, toggleDarkMode }: NavbarProps) {
+  
   const [open, setOpen] = useState(false);
 
   const logout = () => {
