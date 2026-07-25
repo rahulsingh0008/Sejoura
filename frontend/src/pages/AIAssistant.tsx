@@ -17,7 +17,6 @@ function AIAssistant({ darkMode }: Props) {
       showToast({ message: "Please enter a question.", variant: "error" });
       return;
     }
-
     setLoading(true);
     setResponse("");
 
