@@ -18,7 +18,14 @@ require("./config/passport");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      process.env.CLIENT_URL, // Local frontend
+    ],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
@@ -36,9 +43,9 @@ app.use(passport.session());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/queries", queryRoutes);
+app.use("/api/ai", aiRoutes);
 
 app.use(errorHandler);
-app.use("/api/ai", aiRoutes);
 
 const PORT = process.env.PORT || 5000;
 

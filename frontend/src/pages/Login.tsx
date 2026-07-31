@@ -17,7 +17,7 @@ function Login({
 
   const login = async () => {
     const response = await fetch(
-      "http://localhost:5000/api/auth/login",
+      `${import.meta.env.VITE_API_URL}/api/auth/login`,
       {
         method: "POST",
         headers: {
@@ -61,7 +61,7 @@ function Login({
 
           <button onClick={login} className="w-full py-3 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-500 text-white mb-3">Login</button>
 
-          <button onClick={() => { window.location.href = "http://localhost:5000/api/auth/google"; }} className="w-full py-3 rounded-lg border flex items-center justify-center gap-2">
+          <button onClick={() => { window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`; }} className="w-full py-3 rounded-lg border flex items-center justify-center gap-2">
             <svg width="16" height="16" viewBox="0 0 533.5 544.3" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#4285f4" d="M533.5 278.4c0-18.2-1.6-36.3-4.7-53.6H272v101.3h147.1c-6.4 34.6-25.8 63.9-55 83.6l88.8 69.1c51.8-47.8 82.6-118 82.6-200.4z"/><path fill="#34a853" d="M272 544.3c73.7 0 135.7-24.4 181-66.2l-88.8-69.1c-24.7 16.6-56.3 26.4-92.1 26.4-70.8 0-130.8-47.7-152.2-112.1H29.3v70.5C74.8 487.5 168.4 544.3 272 544.3z"/><path fill="#fbbc04" d="M119.8 325.3c-10.8-32.1-10.8-66.6 0-98.7V156.1H29.3c-39.9 78.5-39.9 171.4 0 250l90.5-80.8z"/><path fill="#ea4335" d="M272 107.7c39.7 0 75.3 13.6 103.5 40.2l77.6-77.6C403.2 24 341.2 0 272 0 168.4 0 74.8 56.8 29.3 142.3l90.5 70.5C141.2 155.4 201.2 107.7 272 107.7z"/></svg>
             Sign in with Google
           </button>

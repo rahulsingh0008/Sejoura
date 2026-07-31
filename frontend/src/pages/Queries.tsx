@@ -28,7 +28,7 @@ const [selectedId, setSelectedId] = useState<number | null>(null);
   const fetchQueries = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:5000/api/queries", {
+    fetch(`${import.meta.env.VITE_API_URL}/api/queries`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -61,7 +61,7 @@ const [selectedId, setSelectedId] = useState<number | null>(null);
       return;
     }
     
-    await fetch("http://localhost:5000/api/queries", {
+    await fetch(`${import.meta.env.VITE_API_URL}/api/queries`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -91,7 +91,7 @@ const [selectedId, setSelectedId] = useState<number | null>(null);
         : "pending";
 
     await fetch(
-      `http://localhost:5000/api/queries/${id}`,
+      `${import.meta.env.VITE_API_URL}/api/queries/${id}`,
       {
         method: "PUT",
         headers: {
@@ -112,7 +112,7 @@ const [selectedId, setSelectedId] = useState<number | null>(null);
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/queries/${selectedId}`,
+        `${import.meta.env.VITE_API_URL}/api/queries/${selectedId}`,
         {
           method: "DELETE",
           headers: {
