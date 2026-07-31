@@ -38,7 +38,7 @@ function Login({
 
       showToast({ message: "Login Successful!", variant: "success" });
 
-      navigate("/dashboard");
+      window.location.replace("/dashboard");
     } else {
       if (data.errors && data.errors.length > 0) {
         showToast({ message: data.errors[0].msg, variant: "error" });
