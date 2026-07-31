@@ -31,7 +31,7 @@ function Dashboard({ darkMode }: DashboardProps) {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:5000/api/queries", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/queries`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
