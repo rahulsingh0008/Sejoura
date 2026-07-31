@@ -1,45 +1,72 @@
 # 🌿 Sejoura – AI-Powered Guest Support Assistant
 
-An AI-powered full-stack web application designed for homestays and eco-tourism businesses. Sejoura helps guests get instant travel assistance, manage queries, and receive AI-generated recommendations using Google Gemini.
+An AI-powered full-stack web application designed for homestays and eco-tourism businesses. Sejoura helps guests get instant travel assistance, manage guest queries, and receive AI-powered travel recommendations using Google Gemini.
 
 ---
 
-## 📌 Features
+# 🌐 Live Deployment
 
-### 🔐 Authentication
+## Frontend
+
+ https://sejoura-frontend.vercel.app
+
+## Backend
+
+https://sejoura-backend.onrender.com
+
+---
+
+# 📌 Features
+
+## 🔐 Authentication
+
 - User Registration
 - User Login
 - Google OAuth Login
 - JWT Authentication
 - Protected Routes
 - Logout
-- Password Hashing with bcrypt
-- Rate Limiting for Authentication
+- Password Hashing using bcrypt
+- Express Rate Limiting
+- Input Validation
 
-### 👥 Guest Query Management
+---
+
+## 👥 Guest Query Management
+
 - Create Guest Queries
 - View Guest Queries
-- Update Query Status
+- Update Guest Query Status
 - Delete Guest Queries
-- Search Queries
+- Search Guest Queries
+- Protected CRUD Operations
 
-### 🤖 AI Guest Assistant
-- Google Gemini API Integration
-- Travel Recommendations
-- Homestay Assistance
-- Tourist Attraction Suggestions
-- Itinerary Planning
+---
+
+## 🤖 AI Guest Assistant
+
+- Google Gemini Integration
 - AI-powered Guest Support
+- Travel Recommendations
+- Tourist Attraction Suggestions
+- Homestay Assistance
+- Itinerary Planning
 - Loading State
 - Error Handling
+- Prompt Engineering
 
-### 🎨 Frontend
+---
+
+## 🎨 Frontend
+
 - Responsive Design
-- Dark / Light Mode
-- Reusable UI Components
-- React Router Navigation
+- Dark / Light Theme
+- Dashboard
+- Protected Pages
 - Toast Notifications
 - Loader Component
+- Error Boundary
+- Reusable Components
 
 ---
 
@@ -50,7 +77,7 @@ An AI-powered full-stack web application designed for homestays and eco-tourism 
 - React
 - TypeScript
 - Tailwind CSS
-- React Router DOM
+- React Router
 - Vite
 
 ## Backend
@@ -76,7 +103,7 @@ An AI-powered full-stack web application designed for homestays and eco-tourism 
 
 # 📂 Project Structure
 
-```
+```text
 Sejoura
 │
 ├── frontend
@@ -90,13 +117,13 @@ Sejoura
 │   └── package.json
 │
 ├── backend
+│   ├── prisma
 │   ├── src
 │   │   ├── config
 │   │   ├── controllers
 │   │   ├── middleware
 │   │   ├── routes
 │   │   ├── services
-│   │   ├── prisma
 │   │   └── server.js
 │   │
 │   └── package.json
@@ -128,15 +155,16 @@ npm install
 Create a `.env` file
 
 ```env
-DATABASE_URL=your_supabase_database_url
-
+DATABASE_URL=your_database_url
+DIRECT_URL=your_direct_database_url
 JWT_SECRET=your_jwt_secret
 
 GOOGLE_CLIENT_ID=your_google_client_id
-
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 
 GEMINI_API_KEY=your_gemini_api_key
+
+CLIENT_URL=http://localhost:5173
 ```
 
 Run
@@ -149,6 +177,14 @@ npm run dev
 
 ## Frontend
 
+Create
+
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+Run
+
 ```bash
 cd frontend
 
@@ -159,9 +195,9 @@ npm run dev
 
 ---
 
-# 🔑 Authentication Flow
+# 🔐 Authentication Flow
 
-```
+```text
 Register
       ↓
 Login / Google Login
@@ -179,7 +215,7 @@ Protected API Calls
 
 # 🤖 AI Workflow
 
-```
+```text
 User Question
       ↓
 Frontend
@@ -190,19 +226,19 @@ Express Backend
       ↓
 Google Gemini API
       ↓
-Formatted Response
+AI Response
       ↓
 Frontend Display
 ```
 
 ---
 
-# 📡 API Endpoints
+# 📡 REST API
 
 ## Authentication
 
 | Method | Endpoint |
-|----------|----------------------------|
+|---------|----------|
 | POST | /api/auth/register |
 | POST | /api/auth/login |
 | GET | /api/auth/google |
@@ -213,7 +249,7 @@ Frontend Display
 ## Guest Queries
 
 | Method | Endpoint |
-|----------|--------------------------|
+|---------|----------|
 | GET | /api/queries |
 | GET | /api/queries/:id |
 | POST | /api/queries |
@@ -226,7 +262,7 @@ Frontend Display
 ## AI
 
 | Method | Endpoint |
-|----------|----------------|
+|---------|----------|
 | POST | /api/ai/chat |
 
 ---
@@ -260,25 +296,14 @@ Frontend Display
 
 - JWT Authentication
 - Password Hashing (bcrypt)
-- Google OAuth
+- Google OAuth 2.0
 - Protected Routes
 - Protected API Endpoints
 - Environment Variables
 - Express Rate Limiting
 - Prisma ORM
-
----
-
-# 🚀 Future Enhancements
-
-- Booking Management
-- Email Notifications
-- Multi-language AI Support
-- Voice-based AI Assistant
-- Admin Dashboard
-- AI Chat History
-- AI Recommendation Engine
-- Hotel Analytics Dashboard
+- Input Validation
+- CORS Configuration
 
 ---
 
@@ -286,27 +311,64 @@ Frontend Display
 
 - Home Page
 - Dashboard
-- Guest Queries
 - Login
 - Google OAuth
+- Guest Queries
 - AI Assistant
 - AI Response
 - Network Requests
 
 ---
 
+# 🚀 Deployment
+
+## Frontend
+
+- Hosted on **Vercel**
+
+## Backend
+
+- Hosted on **Render**
+
+## Database
+
+- Hosted on **Supabase PostgreSQL**
+
+---
+
+# ⚠ Known Limitations
+
+- Render free tier spins down after periods of inactivity.
+- The first backend request after idle may take **30–60 seconds** while the service wakes up.
+
+---
+
+# 🚀 Future Enhancements
+
+- Booking Management
+- Admin Dashboard
+- AI Chat History
+- Voice-based AI Assistant
+- Multi-language Support
+- Email Notifications
+- Recommendation Engine
+- Hotel Analytics Dashboard
+
+---
+
 # 📚 Learning Outcomes
 
-- Full Stack Development
-- REST API Design
-- Authentication & Authorization
-- Database Management
+- React Development
+- Express.js REST APIs
+- PostgreSQL Database Design
 - Prisma ORM
+- JWT Authentication
 - Google OAuth
 - AI API Integration
 - Prompt Engineering
+- Secure Backend Development
+- Full Stack Deployment
 - Responsive UI Design
-- Secure API Development
 
 ---
 
@@ -322,4 +384,4 @@ Graphic Era Deemed to be University
 
 # 📄 License
 
-This project was developed as part of the **Technical Business Incubator (TBI)** Internship Program.
+This project was developed as part of the **Technical Business Incubator (TBI) Internship Program**.
