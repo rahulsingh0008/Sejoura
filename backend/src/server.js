@@ -42,7 +42,13 @@ app.use(
 app.use(passport.initialize());
 
 app.use(passport.session());
-
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "success",
+    message: "Sejoura Backend API is running 🚀",
+    version: "1.0.0",
+  });
+});
 app.use("/api/auth", authRoutes);
 app.use("/api/queries", queryRoutes);
 app.use("/api/ai", aiRoutes);
