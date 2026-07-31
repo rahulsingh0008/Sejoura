@@ -33,7 +33,7 @@ function Login({
     if (response.ok) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("email", data.user.email);
-
+      window.location.href = "/dashboard";
       showToast({ message: "Login Successful!", variant: "success" });
 
       window.location.href = "/dashboard";
