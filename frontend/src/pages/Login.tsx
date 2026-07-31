@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { showToast } from "../components/ui/Toast";
 
@@ -10,7 +9,6 @@ type LoginProps = {
 function Login({
   darkMode,
 }: LoginProps) {
-  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +36,7 @@ function Login({
 
       showToast({ message: "Login Successful!", variant: "success" });
 
-      window.location.replace("/dashboard");
+      window.location.href = "/dashboard";
     } else {
       if (data.errors && data.errors.length > 0) {
         showToast({ message: data.errors[0].msg, variant: "error" });
