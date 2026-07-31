@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, Sun, Moon, Home, Info, Grid, MessageSquare, LogOut, LogIn, UserPlus } from "./Icons";
 
@@ -10,13 +10,6 @@ type NavbarProps = {
 function Navbar({ darkMode, toggleDarkMode }: NavbarProps) {
   
   const [open, setOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    !!isLoggedIn
-  );
-
-  useEffect(() => {
-    setIsLoggedIn(!!isLoggedIn);
-  }, []);
 
   const logout = () => {
     localStorage.removeItem("token");
