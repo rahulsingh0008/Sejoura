@@ -40,7 +40,7 @@ router.get(
     );
 
     res.redirect(
-      `http://localhost:5173/login-success?token=${token}`
+      `${process.env.CLIENT_URL}/login-success?token=${token}`
     );
   }
 );
