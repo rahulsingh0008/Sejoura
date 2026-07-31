@@ -126,7 +126,7 @@ const [selectedId, setSelectedId] = useState<number | null>(null);
       }
 
       showToast({
-        type: "success",
+        variant: "success",
         message: "Query deleted successfully!",
       });
 
@@ -136,7 +136,7 @@ const [selectedId, setSelectedId] = useState<number | null>(null);
       fetchQueries();
     } catch (err: any) {
       showToast({
-        type: "error",
+        variant: "error",
         message: err.message || "Something went wrong!",
       });
     }
