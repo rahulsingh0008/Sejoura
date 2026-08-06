@@ -20,3 +20,7 @@ Thumbs.db
 .idea/
 
 *.log
+
+assets/
+screenshots/
+PROMPTS.md
