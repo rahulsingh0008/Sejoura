@@ -16,23 +16,21 @@ https://sejoura-backend.onrender.com
 
 ## 📸 Screenshots
 
-> Add 3–4 screenshots here after uploading them to GitHub.
-
 ### Home Page
 
-![Home](screenshots/home.png)
+![Home](./screenshots/home.png)
 
 ### Dashboard
 
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](./screenshots/dashboard.png)
 
 ### AI Assistant
 
-![AI Assistant](screenshots/ai.png)
+![AI Assistant](./screenshots/ai.png)
 
 ### Guest Queries
 
-![Queries](screenshots/queries.png)
+![Queries](./screenshots/queries.png)
 
 ---
 
